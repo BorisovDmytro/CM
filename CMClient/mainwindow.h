@@ -39,6 +39,13 @@ private slots:
 
   void on_pushButton_2_clicked();
 
+  void on_btnSuccess_clicked();
+
+  void on_btnCansel_clicked();
+
+  void onStartCall(QString from);
+  void onSuccessCall(QString from);
+  void onCancelCall(QString from);
 private:
     Ui::MainWindow *ui;
     CMClientEngene *apiClient;

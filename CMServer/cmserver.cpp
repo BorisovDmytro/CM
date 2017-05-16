@@ -45,7 +45,7 @@ void CMServer::newConnection()
   connect(socket, SIGNAL(readyRead()),
           this,    SLOT(readyRead()));
 
-  entry->add(client);
+  //entry->add(client);
 }
 
 void CMServer::disconnect()
@@ -57,14 +57,15 @@ void CMServer::disconnect()
 
   ClientInstence *client = mConnections.value(socket, NULL);
 
-  if (!client)
-    return;
+  if (client) {
+    mConnections.remove(socket);
+    mClients.remove(client->getAccount()->name());
 
-  mConnections.remove(socket);
-  mClients.remove(client->getAccount()->name());
+    client->disconect();
+    delete client;
+   }
 
-  client->disconect();
-  delete client;
+  socket->deleteLater();
 }
 // TODO CREATE COMMAND FACTORY
 void CMServer::readyRead()
@@ -138,6 +139,8 @@ void CMServer::readyRead()
         out << list.size();
 
         foreach (QString buff, list) {
+          if (buff == client->getAccount()->name())
+            continue;
           out << buff;
         }
 

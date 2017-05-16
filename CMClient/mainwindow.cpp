@@ -19,6 +19,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
   connect(apiClient, SIGNAL(newTextMessage(MessageInformation)),
           this,      SLOT(onNewMessage(MessageInformation)));
+
+  connect(apiClient, SIGNAL(signalStartCall(QString)),
+          this,      SLOT(onStartCall(QString)));
+
+  connect(apiClient, SIGNAL(signalCanselCall(QString)),
+          this,      SLOT(onCancelCall(QString)));
+
+  connect(apiClient, SIGNAL(signalSuccessCall(QString)),
+          this,      SLOT(onSuccessCall(QString)));
 }
 
 MainWindow::~MainWindow()
@@ -29,7 +38,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btnCall_clicked()
 {
-  apiClient->startCall("Client");
+  QString crntItm = ui->listWidget->currentItem()->text();
+
+  apiClient->startCall(crntItm);
   ui->btnEndCall->setEnabled(true);
   ui->btnCall->setEnabled(false);
 }
@@ -121,4 +132,31 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 void MainWindow::on_pushButton_2_clicked()
 {
   apiClient->loadAccountList();
+}
+
+void MainWindow::on_btnSuccess_clicked()
+{
+  apiClient->successCall();
+}
+
+void MainWindow::on_btnCansel_clicked()
+{
+  apiClient->canselCall();
+}
+
+void MainWindow::onStartCall(QString from)
+{
+  ui->labelFrom->setText(from);
+}
+
+void MainWindow::onSuccessCall(QString from)
+{
+  qDebug() << "SUCCESS CALL";
+}
+
+void MainWindow::onCancelCall(QString from)
+{
+  qDebug() << "CANSEL CALL";
+  ui->btnCall->setEnabled(true);
+  ui->btnCansel->setEnabled(false);
 }

@@ -56,15 +56,13 @@ private slots:
 signals:
   void error(QString msg);
   void newTextMessage(MessageInformation msg);
-  void signalEndCall();
-  void signalCall();
   void authResualt(bool isSuccess);
   void connectedDone();
   void accountList(QStringList list);
   void signalSuccessCall(QString from);
   void signalCanselCall(QString from);
   void signalStartCall(QString from);
-  void signalEndCall(QString from);
+  void signalEndCall();
 
 public slots:
   void auth(const QString &strName, const QString &strPassword);
