@@ -151,12 +151,12 @@ void MainWindow::onStartCall(QString from)
 
 void MainWindow::onSuccessCall(QString from)
 {
-  qDebug() << "SUCCESS CALL";
+  qDebug() << "SUCCESS CALL" << from;
 }
 
 void MainWindow::onCancelCall(QString from)
 {
-  qDebug() << "CANSEL CALL";
+  qDebug() << "CANSEL CALL" << from;
   ui->btnCall->setEnabled(true);
   ui->btnCansel->setEnabled(false);
 }

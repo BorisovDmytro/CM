@@ -28,6 +28,8 @@ void CMClientEngene::initialize()
     qDebug() << selectedInput << description << "\n";
   }
 
+  qDebug () << "Support codec" << mAudioRecord->supportedAudioCodecs();
+
   mAudioRecord->setAudioInput(selectedInput);
   mProbe->setSource(mAudioRecord);
 
