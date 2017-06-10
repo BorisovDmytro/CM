@@ -12,9 +12,9 @@ class ICMLoger
 public:
   virtual ~ICMLoger() {}
 
-  virtual void info(const QString &msg);
+  virtual void info(const QString &msg) = 0;
 
-  virtual void error(const QString &msg);
+  virtual void error(const QString &msg) = 0;
 };
 
 #endif // ICMLOGER_H

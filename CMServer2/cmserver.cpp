@@ -12,12 +12,13 @@
 
 CMServer::CMServer(ICMLoger *loger, QObject *parent) : QObject(parent)
 {
-  mLoger  = loger != NULL ? loger : new ConsoleDebugLoger();
+  mLoger  = (loger != NULL) ? loger : new ConsoleDebugLoger();
   mServer = NULL;
 }
 
 CMServer::~CMServer()
 {
+  qDeleteAll(mClients);
   delete mLoger;
 }
 
@@ -46,7 +47,7 @@ void CMServer::start(const CMServerSetting &setting)
 void CMServer::newConnection()
 {
   mLoger->info("New connection done");
-  QTcpSocket *socket     = mServer->nextPendingConnection();
+  QTcpSocket     *socket = mServer->nextPendingConnection();
   ClientInstence *client = new ClientInstence(socket);
 
   mConnections.insert(socket, client);
@@ -55,7 +56,7 @@ void CMServer::newConnection()
           this,   SLOT(disconnect()));
 
   connect(socket, SIGNAL(readyRead()),
-          this,    SLOT(readyRead()));
+          this,   SLOT(readyRead()));
 }
 
 void CMServer::disconnect()
@@ -86,6 +87,9 @@ void CMServer::readyRead()
     return;
 
   ClientInstence *client = mConnections.value(socket, NULL);
+
+  if (client == NULL)
+      return;
 
   QDataStream stream(socket);
   int type = MessageType::Undefined;
@@ -190,7 +194,7 @@ void CMServer::readyRead()
           out << (int) MessageType::SuccessCall;
           out << client->getAccount()->name();
 
-          entry->getUser(0)->get()->write(arr);
+          entry->getUser(0)->send(arr);
         }
       } break;
       case MessageType::CanselCall: {
