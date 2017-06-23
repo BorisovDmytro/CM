@@ -11,14 +11,19 @@
 
 #include "clientinstence.h"
 #include "callentry.h"
-#include "cmserversetting.h"
-#include "icmloger.h"
+#include "setting/cmserversetting.h"
+#include "log/icmloger.h"
+#include "database/dbconnectedsetting.h"
+
+#include "database/dbconnection.h"
+#include "database/dbaccountcontroller.h"
 
 #include <QSharedPointer>
 
 class QTcpSocket;
 class QTcpServer;
 
+typedef QMap<QString, Account*>             CacheAccount;
 typedef QMap<QTcpSocket *,ClientInstence *> ConenctionMap;
 typedef QMap<QString,     ClientInstence *> ClientMap;
 typedef QList<CallEntry *>                  CallEntryList;
@@ -32,13 +37,16 @@ private:
   ConenctionMap mConnections;
   ClientMap     mClients;
   CallEntryList mCalls;
+  CacheAccount  mAccounts;
 
+  DbConnection        mDbConnection;
+  DbAccountController mDbAccountCtrl;
 public:
   explicit CMServer(ICMLoger *loger = 0, QObject *parent = 0);
   ~CMServer();
 
   void start(QString host, int port);
-  void start(const CMServerSetting &setting);
+  void start(const CMServerSetting &setting, const DbConnectedSetting &dbSetting);
 signals:
 
 private slots:
@@ -47,6 +55,8 @@ private slots:
   void disconnect();
 
   void readyRead();
+
+  void updateAccountCache();
 };
 
 #endif // CMSERVER_H

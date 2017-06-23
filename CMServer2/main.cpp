@@ -3,9 +3,9 @@
 #include <QDebug>
 #include <QDir>
 #include "cmserver.h"
-#include "consoledebugloger.h"
-
-#include "diffhelmanprotocol.h"
+#include "log/consoledebugloger.h"
+#include "database/dbconnectedsetting.h"
+#include "crypto/diffhelmanprotocol.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,13 +16,18 @@ int main(int argc, char *argv[])
 
   ConsoleDebugLoger *pLoger = new ConsoleDebugLoger();
 
-  QString configPath = QDir::currentPath() + "/server.json";
-  pLoger->info("Config file path : " + configPath);
+  QString configPath   = QDir::currentPath() + "/server.json";
+  QString configDbPath = QDir::currentPath() + "/database.json";
 
-  CMServerSetting setting;
+  pLoger->info("Config file path : " + configPath);
+  pLoger->info("Config database file path : " + configDbPath);
+
+  CMServerSetting    setting;
+  DbConnectedSetting dbSetting;
 
   try {
     setting.load(configPath);
+    dbSetting.load(configDbPath);
   } catch(...) {
     pLoger->error("Error load config file, set default setting : host 127.0.0.1, port 8080 and start server");
     setting.setHost("127.0.0.1");
@@ -30,7 +35,7 @@ int main(int argc, char *argv[])
   }
 
   CMServer server(pLoger);
-  server.start(setting);
+  server.start(setting, dbSetting);
 
   return a.exec();
 }

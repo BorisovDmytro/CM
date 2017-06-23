@@ -1,7 +1,7 @@
 #ifndef CLIENTINSTENCE_H
 #define CLIENTINSTENCE_H
 
-#include "account.h"
+#include "entity/account.h"
 #include <QTcpSocket>
 #include <QObject>
 #include "protocol.h"

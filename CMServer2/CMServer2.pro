@@ -1,4 +1,4 @@
-QT += core network
+QT += core network sql
 QT -= gui
 
 CONFIG += c++11
@@ -9,15 +9,21 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
-SOURCES += main.cpp \
-    account.cpp \
+SOURCES += \
+    database/basesqlcontroller.cpp \
+    database/dbaccountcontroller.cpp \
+    database/dbconnectedsetting.cpp \
+    database/dbconnection.cpp \
+    database/dbmessagecontroller.cpp \
     callentry.cpp \
     clientinstence.cpp \
     cmserver.cpp \
-    cmserversetting.cpp \
-    messageinformation.cpp \
-    consoledebugloger.cpp \
-    diffhelmanprotocol.cpp
+    main.cpp \
+    entity/account.cpp \
+    entity/messageinformation.cpp \
+    crypto/diffhelmanprotocol.cpp \
+    log/consoledebugloger.cpp \
+    setting/cmserversetting.cpp
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked deprecated (the exact warnings
@@ -35,14 +41,18 @@ FORMS +=
 DISTFILES +=
 
 HEADERS += \
-    account.h \
+    database/basesqlcontroller.h \
+    database/dbaccountcontroller.h \
+    database/dbconnectedsetting.h \
+    database/dbconnection.h \
+    database/dbmessagecontroller.h \
     callentry.h \
     clientinstence.h \
     cmserver.h \
-    cmserversetting.h \
-    mainwindow.h \
-    messageinformation.h \
     protocol.h \
-    icmloger.h \
-    consoledebugloger.h \
-    diffhelmanprotocol.h
+    entity/account.h \
+    entity/messageinformation.h \
+    crypto/diffhelmanprotocol.h \
+    log/consoledebugloger.h \
+    log/icmloger.h \
+    setting/cmserversetting.h

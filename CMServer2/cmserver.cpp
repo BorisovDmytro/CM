@@ -4,13 +4,14 @@
 #include <QTcpSocket>
 
 #include <QDebug>
-#include "messageinformation.h"
+#include "entity/messageinformation.h"
 
-#include "icmloger.h"
-#include "consoledebugloger.h"
+#include "log/icmloger.h"
+#include "log/consoledebugloger.h"
 
 
-CMServer::CMServer(ICMLoger *loger, QObject *parent) : QObject(parent)
+CMServer::CMServer(ICMLoger *loger, QObject *parent)
+  : QObject(parent)
 {
   mLoger  = (loger != NULL) ? loger : new ConsoleDebugLoger();
   mServer = NULL;
@@ -39,8 +40,15 @@ void CMServer::start(QString host, int port)
   mLoger->info("Serever start on " + host + ":" + QString::number(port));
 }
 
-void CMServer::start(const CMServerSetting &setting)
+void CMServer::start(const CMServerSetting &setting, const DbConnectedSetting &dbSetting)
 {
+  mDbConnection.init(dbSetting);
+  if (!mDbConnection.connect()) {
+      qDebug() << "Error connect to database";
+    }
+
+  mDbAccountCtrl.init(&mDbConnection);
+  updateAccountCache();
   start(setting.host(), setting.port());
 }
 
@@ -111,9 +119,14 @@ void CMServer::readyRead()
         out << (int) MessageType::Auth;
 
         if (mClients.value(name, NULL) == NULL) {
-          out << true;
-          client->setAccount(new Account(name, pass));
-          mClients.insert(name, client);
+          Account* acc = mAccounts.value(name, NULL);
+          if (acc != NULL && pass == acc->password()) {
+              client->setAccount(acc);
+              mClients.insert(name, client);
+              out << true;
+            } else {
+              out << false;
+            }
         } else {
           out << false;
         }
@@ -143,7 +156,7 @@ void CMServer::readyRead()
 
       } break;
       case MessageType::GetUserList: {
-        QList<QString> list = mClients.keys();
+        QList<QString> list = mAccounts.keys();
         QByteArray arr;
         QDataStream out(&arr, QIODevice::WriteOnly);
         out.setVersion(QDataStream::Qt_5_8);
@@ -158,7 +171,7 @@ void CMServer::readyRead()
         }
 
         socket->write(arr);
-        qDebug() << "GetUserList " << mClients.keys();
+        qDebug() << "GetUserList " << mAccounts.keys();
       } break;
       case MessageType::StartCall: {
         QString recipient;
@@ -240,5 +253,15 @@ void CMServer::readyRead()
     } catch(...) {
       mLoger->error("Error parse package");
     }
- // }
+  // }
+}
+
+void CMServer::updateAccountCache()
+{
+  mAccounts.clear();
+  QList<Account*> accoutn = mDbAccountCtrl.getAll();
+
+  foreach (Account* acc, accoutn) {
+      mAccounts.insert(acc->name(), acc);
+    }
 }
