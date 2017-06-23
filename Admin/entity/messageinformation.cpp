@@ -15,7 +15,7 @@ MessageInformation::MessageInformation()
 
 }
 
-MessageInformation::MessageInformation(QString recipient, QString autor, QString message, QDate date, QTime)
+MessageInformation::MessageInformation(QString recipient, QString autor, QString message, QDate date, QTime time)
 {
   this->recipient = recipient;
   this->autor = autor;

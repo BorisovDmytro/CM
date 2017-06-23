@@ -9,9 +9,11 @@ class Account
 private:
   QString mName;
   QString mPassword;
+  bool    mIsOnline;
 
 public:
-  Account(QString name, QString password);
+  Account();
+  Account(QString name, QString password, bool isOnline = false);
   Account(QDataStream &stream);
 
 
@@ -21,6 +23,8 @@ public:
   void setName(const QString &name);
   QString password() const;
   void setPassword(const QString &password);
+  bool isOnline() const;
+  void setIsOnline(bool isOnline);
 };
 
 #endif // ACCOUNT_H

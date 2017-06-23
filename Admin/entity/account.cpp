@@ -1,8 +1,15 @@
 #include "account.h"
-Account::Account(QString name, QString password)
+
+Account::Account(QString name, QString password, bool isOnline)
 {
-  mName = name;
-  mPassword = password;
+    mName = name;
+    mPassword = password;
+    mIsOnline = isOnline;
+}
+
+Account::Account()
+{
+
 }
 
 Account::Account(QDataStream &stream)
@@ -35,4 +42,14 @@ QString Account::name() const
 void Account::setName(const QString &name)
 {
   mName = name;
+}
+
+bool Account::isOnline() const
+{
+    return mIsOnline;
+}
+
+void Account::setIsOnline(bool isOnline)
+{
+    mIsOnline = isOnline;
 }

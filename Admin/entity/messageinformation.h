@@ -12,26 +12,21 @@ protected:
   QString recipient;
   QString autor;
   QString message;
-  QDate   date;
-  QTime   time;
-
+  QDate date;
+  QTime time;
 public:
   MessageInformation();
-  MessageInformation(QString recipient, QString autor, QString message, QDate date, QTime);
+  MessageInformation(QString recipient, QString autor, QString message, QDate date, QTime time);
   MessageInformation(QDataStream &stream);
 
   QString getAutor() const;
   void setAutor(const QString &value);
-
   QString getMessage() const;
   void setMessage(const QString &value);
-
   QDate getDate() const;
   void setDate(const QDate &value);
-
   QTime getTime() const;
   void setTime(const QTime &value);
-
   QString getRecipient() const;
   void setRecipient(const QString &value);
 
