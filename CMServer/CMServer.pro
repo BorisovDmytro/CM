@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     callentry.cpp \
     clientinstence.cpp \
     account.cpp \
-    messageinformation.cpp
+    messageinformation.cpp \
+    cmserversetting.cpp
 
 HEADERS  += mainwindow.h \
     cmserver.h \
@@ -37,6 +38,7 @@ HEADERS  += mainwindow.h \
     clientinstence.h \
     account.h \
     messageinformation.h \
-    protocol.h
+    protocol.h \
+    cmserversetting.h
 
 FORMS    += mainwindow.ui
