@@ -153,12 +153,14 @@ void CMClientEngene::readCallFrame(QDataStream &stream)
   stream >> voiceFrameIndex;
   stream >> lengthExpected;
 
+  qDebug() << "readCallFrame" << mExpectedVoiceFrameIndex << " " << voiceFrameIndex;
   if (mExpectedVoiceFrameIndex <= voiceFrameIndex) {
     stream.readBytes(data, lengthRead);
     qDebug() << "LengthRead: " << lengthRead << " " << lengthExpected;
     playAudio(data, lengthExpected);
   } else {
-    qDebug () << "old frame";
+    stream.readBytes(data, lengthRead);
+    qDebug () << "old frame" << lengthRead;
   }
 
   mExpectedVoiceFrameIndex = voiceFrameIndex++;
