@@ -157,7 +157,8 @@ void CMClientEngene::readCallFrame(QDataStream &stream)
   if (mExpectedVoiceFrameIndex <= voiceFrameIndex) {
     stream.readBytes(data, lengthRead);
     qDebug() << "LengthRead: " << lengthRead << " " << lengthExpected;
-    playAudio(data, lengthExpected);
+    if (lengthRead > 0)
+      playAudio(data, lengthExpected);
   } else {
     stream.readBytes(data, lengthRead);
     qDebug () << "old frame" << lengthRead;
@@ -169,8 +170,6 @@ void CMClientEngene::readCallFrame(QDataStream &stream)
 
 void CMClientEngene::audioBufferProbed(const QAudioBuffer& buffer)
 {
-  qDebug() << "audioBufferProbed" << buffer.byteCount();
-
   int count = buffer.byteCount();
   if (count == 0)
     return;
