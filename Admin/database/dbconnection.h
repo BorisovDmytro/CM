@@ -21,6 +21,8 @@ public:
   QSqlQuery getQuery();
 
   bool isConnected();
+
+  QString getLastError();
 };
 
 #endif // DBCONNECTION_H

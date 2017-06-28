@@ -76,7 +76,7 @@ void MainWindow::on_action_5_triggered()
       DbConnectedSetting setting = dlg.getSetting();
       mConnection.init(setting);
       if (!mConnection.connect()) {
-          QMessageBox::warning(this, "Ошибка", "Ошибка подключения к базе");
+          QMessageBox::warning(this, "Ошибка", "Ошибка подключения к базе\n" + mConnection.getLastError());
           return;
         }
       mAccountCntrl.init(&mConnection);
