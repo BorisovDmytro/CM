@@ -54,8 +54,10 @@ private slots:
   void slotError(QAbstractSocket::SocketError err);
 
 signals:
+  /**
+   */
   void error(QString msg);
-  void newTextMessage(MessageInformation msg);
+  void newTextMessage(QString recipient, QString autor, QString message, QString date, QString time);
   void authResualt(bool isSuccess);
   void connectedDone();
   void accountList(QStringList list);
