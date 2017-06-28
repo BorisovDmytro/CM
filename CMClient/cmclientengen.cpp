@@ -208,6 +208,7 @@ void CMClientEngene::readyRead()
     qDebug () << "Type" << type;
     switch (type) {
     case CallFrame: {
+      qDebug() << "CallFrame";
       readCallFrame(stream);
     } break;
     case Auth: {
@@ -268,7 +269,7 @@ void CMClientEngene::readyRead()
   } catch (...) {
     qDebug () << "Error read chunck";
   }
-
+  qDebug() << "Byte availabel:" << (int)mSocket->bytesAvailable();
 }
 
 void CMClientEngene::slotError(QAbstractSocket::SocketError err)
