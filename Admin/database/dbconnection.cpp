@@ -1,5 +1,6 @@
 #include "dbconnection.h"
 #include <QSqlDatabase>
+#include <QSqlError>
 
 DbConnection::DbConnection()
 {
@@ -27,5 +28,10 @@ QSqlQuery DbConnection::getQuery()
 
 bool DbConnection::isConnected()
 {
-  return mDb.isOpen();
+    return mDb.isOpen();
+}
+
+QString DbConnection::getLastError()
+{
+    return mDb.lastError().text();
 }

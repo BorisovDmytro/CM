@@ -100,6 +100,7 @@ void CMClientEngene::endCall()
 
 void CMClientEngene::connectToHost(QString host, int port)
 {
+  qDebug() << "connect to server at: " << host  << " : "<< port;
   mSocket = new QTcpSocket(this);
   mSocket->connectToHost(host, port);
 
@@ -236,7 +237,12 @@ void CMClientEngene::readyRead()
     } break;
     case TextMessage: {
       MessageInformation msg(stream);
-      emit newTextMessage(msg);
+      //QString recipient, QString autor, QString message, QDate date, QTime time
+      emit newTextMessage(msg.getRecipient(),
+                          msg.getAutor(),
+                          msg.getMessage(),
+                          msg.getDate().toString("dd.MM.yyyy"),
+                          msg.getTime().toString("hh:mm:ss"));
     } break;
     case StartCall: {
       QString fromName;
@@ -245,6 +251,7 @@ void CMClientEngene::readyRead()
       emit signalStartCall(fromName);
     } break;
     case SuccessCall: {
+      qDebug() << "success call";
       QString fromName;
       stream >> fromName;
 

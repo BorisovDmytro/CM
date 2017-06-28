@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>AutorizationPage.qml</file>
+        <file>images/arrow.png</file>
+        <file>images/loading-animated.gif</file>
+        <file>GeneralPage.qml</file>
+        <file>RegistrationPage.qml</file>
+        <file>RestorePasswordPage.qml</file>
+        <file>images/back.png</file>
+        <file>ContactListPage.qml</file>
+        <file>ChatListPage.qml</file>
+        <file>CallListPage.qml</file>
+        <file>images/no-avatar.png</file>
+        <file>images/message.png</file>
+        <file>images/phone-512.png</file>
+        <file>images/settings.png</file>
+        <file>images/search.png</file>
+        <file>images/arrow-white.png</file>
+        <file>MessagePage.qml</file>
+        <file>images/messageBackground.jpg</file>
+        <file>IncomingCallPage.qml</file>
+        <file>images/phone-cancel.png</file>
+        <file>images/phone-flat.png</file>
+    </qresource>
+</RCC>
