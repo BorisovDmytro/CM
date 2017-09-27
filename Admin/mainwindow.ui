@@ -13,38 +13,14 @@
   <property name="windowTitle">
    <string>Messanger Admin</string>
   </property>
-  <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>210</y>
-      <width>80</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>connect</string>
-    </property>
-   </widget>
-   <widget class="QTableWidget" name="tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>50</y>
-      <width>271</width>
-      <height>301</height>
-     </rect>
-    </property>
-   </widget>
-  </widget>
+  <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>623</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -62,6 +38,7 @@
     <addaction name="action_2"/>
     <addaction name="action_3"/>
     <addaction name="action_4"/>
+    <addaction name="action_7"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
@@ -103,6 +80,11 @@
   <action name="action_6">
    <property name="text">
     <string>Отключится</string>
+   </property>
+  </action>
+  <action name="action_7">
+   <property name="text">
+    <string>Инициализаци бд</string>
    </property>
   </action>
  </widget>

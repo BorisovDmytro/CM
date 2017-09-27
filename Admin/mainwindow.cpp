@@ -97,3 +97,8 @@ void MainWindow::on_action_triggered()
       delete acc;
     }
 }
+
+void MainWindow::on_action_7_triggered()
+{
+    mAccountCntrl.createTable();
+}

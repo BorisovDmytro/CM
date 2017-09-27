@@ -32,6 +32,8 @@ private slots:
 
   void on_action_triggered();
 
+  void on_action_7_triggered();
+
 private:
   Ui::MainWindow *ui;
   QSqlDatabase db;

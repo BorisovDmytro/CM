@@ -2,6 +2,7 @@
 #include <QSqlResult>
 #include <QSqlError>
 #include <QMessageBox>
+#include <QDebug>
 
 DbAccountController::DbAccountController()
 {
@@ -106,18 +107,9 @@ Account *DbAccountController::getByName(const QString &name)
 void DbAccountController::createTable()
 {
   QSqlQuery query = connect->getQuery();
-  query.prepare("CREATE TABLE users"
-                "("
-                "  name character varying(200) NOT NULL,"
-                "  password character varying(200),"
-                "  online boolean,"
-                "  CONSTRAINT pk_users PRIMARY KEY (name)"
-                ")"
-                "WITH ("
-                "  OIDS=FALSE"
-                ");"
-                "ALTER TABLE users"
-                "  OWNER TO postgres;");
+  QString req = "CREATE TABLE users( name character varying(200) NOT NULL,  password character varying(200),  online boolean,  CONSTRAINT pk_users PRIMARY KEY (name)) WITH (  OIDS=FALSE);ALTER TABLE users  OWNER TO postgres;";
+  qDebug() << req;
+  query.prepare(req);
   if (!query.exec()) {
       printError(query);
     }
